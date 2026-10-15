@@ -1,0 +1,5 @@
+/* Keep long addresses from squeezing the other table columns. */
+.places-table { min-width: 1050px; font-size: 14px; }
+.places-table th, .places-table td { padding: 16px 12px; }
+.place-column { min-width: 260px; max-width: 340px; }
+.contact-column { min-width: 130px; overflow-wrap: anywhere; }

@@ -1,0 +1,97 @@
+@page
+@model Vegan.RazorWebApp.DuyLD.Pages.VeganPlaceDuyLds.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>VeganPlaceDuyLd</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VeganPlaceDuyLd.CategoryName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VeganPlaceDuyLd.CategoryName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VeganPlaceDuyLd.CategoryDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VeganPlaceDuyLd.CategoryDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VeganPlaceDuyLd.CategoryDisplayOrder)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VeganPlaceDuyLd.CategoryDisplayOrder)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VeganPlaceDuyLd.PlaceName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VeganPlaceDuyLd.PlaceName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VeganPlaceDuyLd.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VeganPlaceDuyLd.Address)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VeganPlaceDuyLd.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VeganPlaceDuyLd.Phone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VeganPlaceDuyLd.Website)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VeganPlaceDuyLd.Website)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VeganPlaceDuyLd.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VeganPlaceDuyLd.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VeganPlaceDuyLd.Latitude)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VeganPlaceDuyLd.Latitude)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VeganPlaceDuyLd.Longitude)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VeganPlaceDuyLd.Longitude)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VeganPlaceDuyLd.Rating)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VeganPlaceDuyLd.Rating)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VeganPlaceDuyLd.CreatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VeganPlaceDuyLd.CreatedAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VeganPlaceDuyLd.IsActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VeganPlaceDuyLd.IsActive)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.VeganPlaceDuyLd.VeganPlaceDuyLdid">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

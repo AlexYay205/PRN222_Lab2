@@ -1,0 +1,81 @@
+@page
+@model Vegan.RazorWebApp.DuyLD.Pages.VeganPlaceDuyLds.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>VeganPlaceDuyLd</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="VeganPlaceDuyLd.CategoryName" class="control-label"></label>
+                <input asp-for="VeganPlaceDuyLd.CategoryName" class="form-control" />
+                <span asp-validation-for="VeganPlaceDuyLd.CategoryName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VeganPlaceDuyLd.CategoryDescription" class="control-label"></label>
+                <input asp-for="VeganPlaceDuyLd.CategoryDescription" class="form-control" />
+                <span asp-validation-for="VeganPlaceDuyLd.CategoryDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VeganPlaceDuyLd.CategoryDisplayOrder" class="control-label"></label>
+                <input asp-for="VeganPlaceDuyLd.CategoryDisplayOrder" class="form-control" />
+                <span asp-validation-for="VeganPlaceDuyLd.CategoryDisplayOrder" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VeganPlaceDuyLd.PlaceName" class="control-label"></label>
+                <input asp-for="VeganPlaceDuyLd.PlaceName" class="form-control" />
+                <span asp-validation-for="VeganPlaceDuyLd.PlaceName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VeganPlaceDuyLd.Address" class="control-label"></label>
+                <input asp-for="VeganPlaceDuyLd.Address" class="form-control" />
+                <span asp-validation-for="VeganPlaceDuyLd.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VeganPlaceDuyLd.Phone" class="control-label"></label>
+                <input asp-for="VeganPlaceDuyLd.Phone" class="form-control" />
+                <span asp-validation-for="VeganPlaceDuyLd.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VeganPlaceDuyLd.Website" class="control-label"></label>
+                <input asp-for="VeganPlaceDuyLd.Website" class="form-control" />
+                <span asp-validation-for="VeganPlaceDuyLd.Website" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VeganPlaceDuyLd.Description" class="control-label"></label>
+                <input asp-for="VeganPlaceDuyLd.Description" class="form-control" />
+                <span asp-validation-for="VeganPlaceDuyLd.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VeganPlaceDuyLd.Latitude" class="control-label"></label>
+                <input asp-for="VeganPlaceDuyLd.Latitude" class="form-control" />
+                <span asp-validation-for="VeganPlaceDuyLd.Latitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VeganPlaceDuyLd.Longitude" class="control-label"></label>
+                <input asp-for="VeganPlaceDuyLd.Longitude" class="form-control" />
+                <span asp-validation-for="VeganPlaceDuyLd.Longitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VeganPlaceDuyLd.Rating" class="control-label"></label>
+                <input asp-for="VeganPlaceDuyLd.Rating" class="form-control" />
+                <span asp-validation-for="VeganPlaceDuyLd.Rating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+

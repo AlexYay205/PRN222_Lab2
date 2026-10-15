@@ -1,0 +1,151 @@
+@page "/VeganPlaceDuyLds/Index"
+@model Vegan.RazorWebApp.DuyLD.Pages.VeganPlaceDuyLds.IndexModel
+
+@{
+    ViewData["Title"] = "Vegan Places";
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mt-4 mb-4">
+    <div>
+        <h1 class="h3 mb-1">Vegan Places</h1>
+        <p class="text-muted mb-0">Locations, categories and availability</p>
+    </div>
+    <a asp-page="Create" class="btn btn-success">Create New</a>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="border-start border-success border-3 ps-3">
+            <div class="text-muted small">Total places</div>
+            <strong class="fs-4">@Model.TotalPlaces</strong>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="border-start border-success border-3 ps-3">
+            <div class="text-muted small">Active</div>
+            <strong class="fs-4">@Model.ActivePlaces</strong>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="border-start border-info border-3 ps-3">
+            <div class="text-muted small">Categories</div>
+            <strong class="fs-4">@Model.CategoryCount</strong>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="border-start border-warning border-3 ps-3">
+            <div class="text-muted small">Average rating</div>
+            <strong class="fs-4">@Model.AverageRating.ToString("0.0")</strong>
+        </div>
+    </div>
+</div>
+
+<form method="get" asp-page="./Index" class="row g-3 align-items-end bg-light border rounded p-3 mb-4">
+    <div class="col-md-4">
+        <label asp-for="PlaceSearch" class="form-label">Place</label>
+        <input asp-for="PlaceSearch" type="search" class="form-control" placeholder="Place name" />
+    </div>
+    <div class="col-md-3">
+        <label asp-for="CategorySearch" class="form-label">Category</label>
+        <input asp-for="CategorySearch" type="search" class="form-control" placeholder="Category name" />
+    </div>
+    <div class="col-md-2">
+        <label asp-for="IsActive" class="form-label">Status</label>
+        <select asp-for="IsActive" class="form-select">
+            <option value="">All statuses</option>
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
+        </select>
+    </div>
+    <div class="col-md-3 d-flex gap-2">
+        <button type="submit" class="btn btn-success">Search</button>
+        <a asp-page="./Index" class="btn btn-outline-secondary">Clear</a>
+    </div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle places-table">
+        <thead class="table-light text-nowrap">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Place</th>
+                <th scope="col">Category</th>
+                <th scope="col">Contact</th>
+                <th scope="col">Rating</th>
+                <th scope="col">Status</th>
+                <th scope="col">Created</th>
+                <th scope="col" class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.VeganPlaceDuyLd)
+            {
+                <tr>
+                    <td class="text-muted">@item.VeganPlaceDuyLdid</td>
+                    <td class="place-column">
+                        <strong>@item.PlaceName</strong>
+                        <div class="text-muted small mt-1">@item.Address</div>
+                    </td>
+                    <td>@item.CategoryName</td>
+                    <td class="contact-column">
+                        <div>@item.Phone</div>
+                        @if (Uri.TryCreate(item.Website, UriKind.Absolute, out var website) && (website.Scheme == "https" || website.Scheme == "http"))
+                        {
+                            <a href="@website.AbsoluteUri" target="_blank" rel="noopener noreferrer" class="small">Website</a>
+                        }
+                    </td>
+                    <td class="text-nowrap fw-bold">@(item.Rating?.ToString("0.0") ?? "N/A")</td>
+                    <td>
+                        @if (item.IsActive)
+                        {
+                            <span class="badge bg-success">Active</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Inactive</span>
+                        }
+                    </td>
+                    <td class="text-nowrap small">@item.CreatedAt.ToString("dd/MM/yyyy")</td>
+                    <td class="text-end text-nowrap">
+                        <a asp-page="./Details" asp-route-id="@item.VeganPlaceDuyLdid" class="btn btn-outline-primary btn-sm">Details</a>
+                        <a asp-page="./Edit" asp-route-id="@item.VeganPlaceDuyLdid" class="btn btn-outline-secondary btn-sm">Edit</a>
+                        <a asp-page="./Delete" asp-route-id="@item.VeganPlaceDuyLdid" class="btn btn-outline-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+            @if (Model.ResultCount == 0)
+            {
+                <tr><td colspan="8" class="text-center text-muted py-5">No places found.</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-3">
+    <span class="text-muted small">@Model.ResultCount results · Page @Model.PageNumber of @Model.TotalPages</span>
+    <nav aria-label="Places pagination">
+        <ul class="pagination pagination-sm mb-0">
+            <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+                @if (Model.PageNumber > 1)
+                {
+                    <a class="page-link" asp-page="./Index" asp-route-PageNumber="@(Model.PageNumber - 1)" asp-route-PlaceSearch="@Model.PlaceSearch" asp-route-CategorySearch="@Model.CategorySearch" asp-route-IsActive="@Model.IsActive">Previous</a>
+                }
+                else
+                {
+                    <span class="page-link">Previous</span>
+                }
+            </li>
+            <li class="page-item active"><span class="page-link" aria-current="page">@Model.PageNumber</span></li>
+            <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
+                @if (Model.PageNumber < Model.TotalPages)
+                {
+                    <a class="page-link" asp-page="./Index" asp-route-PageNumber="@(Model.PageNumber + 1)" asp-route-PlaceSearch="@Model.PlaceSearch" asp-route-CategorySearch="@Model.CategorySearch" asp-route-IsActive="@Model.IsActive">Next</a>
+                }
+                else
+                {
+                    <span class="page-link">Next</span>
+                }
+            </li>
+        </ul>
+    </nav>
+</div>
