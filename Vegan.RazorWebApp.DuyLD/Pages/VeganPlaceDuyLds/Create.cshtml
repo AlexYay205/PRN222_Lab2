@@ -7,10 +7,10 @@
 
 <h1>Create</h1>
 
-<h4>VeganPlaceDuyLd</h4>
+<h4>Vegan place</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8 col-lg-6">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -68,13 +68,21 @@
                 <input asp-for="VeganPlaceDuyLd.Rating" class="form-control" />
                 <span asp-validation-for="VeganPlaceDuyLd.Rating" class="text-danger"></span>
             </div>
+            <div class="form-group form-check">
+                <input asp-for="VeganPlaceDuyLd.IsActive" class="form-check-input" />
+                <label asp-for="VeganPlaceDuyLd.IsActive" class="form-check-label"></label>
+            </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-success" />
+                <a asp-page="./Index" class="btn btn-outline-secondary">Cancel</a>
             </div>
         </form>
     </div>
 </div>
 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 <div>
     <a asp-page="Index">Back to List</a>
 </div>

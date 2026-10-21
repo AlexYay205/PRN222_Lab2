@@ -1,44 +1,32 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Vegan.Entities.DuyLD.Models;
-using Vegan.Repositories.DuyLD.DBContext;
+using Vegan.Services.DuyLD;
 
-namespace Vegan.RazorWebApp.DuyLD.Pages.VeganPlaceDuyLds
+namespace Vegan.RazorWebApp.DuyLD.Pages.VeganPlaceDuyLds;
+
+public class CreateModel : PageModel
 {
-    public class CreateModel : PageModel
+    private readonly IVeganPlaceServiceDuyLd _service;
+
+    public CreateModel(IVeganPlaceServiceDuyLd service)
     {
-        private readonly Vegan.Repositories.DuyLD.DBContext.VeganDBContext _context;
+        _service = service;
+    }
 
-        public CreateModel(Vegan.Repositories.DuyLD.DBContext.VeganDBContext context)
-        {
-            _context = context;
-        }
+    [BindProperty]
+    public VeganPlaceDuyLd VeganPlaceDuyLd { get; set; } = new() { IsActive = true };
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
+    public IActionResult OnGet()
+    {
+        return Page();
+    }
 
-        [BindProperty]
-        public VeganPlaceDuyLd VeganPlaceDuyLd { get; set; } = default!;
-
-        // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            _context.VeganPlaceDuyLds.Add(VeganPlaceDuyLd);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
-        }
+    public async Task<IActionResult> OnPostAsync()
+    {
+        VeganPlaceDuyLd.CreatedAt = DateTime.Now;
+        await _service.CreateAsync(VeganPlaceDuyLd);
+        return RedirectToPage("./Index");
     }
 }
+

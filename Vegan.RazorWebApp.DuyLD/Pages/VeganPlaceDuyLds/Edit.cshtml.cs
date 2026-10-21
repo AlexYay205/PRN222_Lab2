@@ -1,77 +1,43 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Vegan.Entities.DuyLD.Models;
-using Vegan.Repositories.DuyLD.DBContext;
+using Vegan.Services.DuyLD;
 
-namespace Vegan.RazorWebApp.DuyLD.Pages.VeganPlaceDuyLds
+namespace Vegan.RazorWebApp.DuyLD.Pages.VeganPlaceDuyLds;
+
+public class EditModel : PageModel
 {
-    public class EditModel : PageModel
+    private readonly IVeganPlaceServiceDuyLd _service;
+
+    public EditModel(IVeganPlaceServiceDuyLd service)
     {
-        private readonly Vegan.Repositories.DuyLD.DBContext.VeganDBContext _context;
+        _service = service;
+    }
 
-        public EditModel(Vegan.Repositories.DuyLD.DBContext.VeganDBContext context)
+    [BindProperty]
+    public VeganPlaceDuyLd VeganPlaceDuyLd { get; set; } = new();
+
+    public async Task<IActionResult> OnGetAsync(long? id)
+    {
+        if (id == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        [BindProperty]
-        public VeganPlaceDuyLd VeganPlaceDuyLd { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(long? id)
+        var place = await _service.GetByIdAsync(id.Value);
+        if (place == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var veganplaceduyld =  await _context.VeganPlaceDuyLds.FirstOrDefaultAsync(m => m.VeganPlaceDuyLdid == id);
-            if (veganplaceduyld == null)
-            {
-                return NotFound();
-            }
-            VeganPlaceDuyLd = veganplaceduyld;
-            return Page();
+            return NotFound();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+        VeganPlaceDuyLd = place;
+        return Page();
+    }
 
-            _context.Attach(VeganPlaceDuyLd).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!VeganPlaceDuyLdExists(VeganPlaceDuyLd.VeganPlaceDuyLdid))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool VeganPlaceDuyLdExists(long id)
-        {
-            return _context.VeganPlaceDuyLds.Any(e => e.VeganPlaceDuyLdid == id);
-        }
+    public async Task<IActionResult> OnPostAsync()
+    {
+        await _service.UpdateAsync(VeganPlaceDuyLd);
+        return RedirectToPage("./Index");
     }
 }
+

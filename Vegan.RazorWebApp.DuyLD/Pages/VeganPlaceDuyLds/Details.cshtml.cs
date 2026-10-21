@@ -1,43 +1,36 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using Vegan.Entities.DuyLD.Models;
-using Vegan.Repositories.DuyLD.DBContext;
+using Vegan.Services.DuyLD;
 
-namespace Vegan.RazorWebApp.DuyLD.Pages.VeganPlaceDuyLds
+namespace Vegan.RazorWebApp.DuyLD.Pages.VeganPlaceDuyLds;
+
+public class DetailsModel : PageModel
 {
-    public class DetailsModel : PageModel
+    private readonly IVeganPlaceServiceDuyLd _service;
+
+    public DetailsModel(IVeganPlaceServiceDuyLd service)
     {
-        private readonly Vegan.Repositories.DuyLD.DBContext.VeganDBContext _context;
+        _service = service;
+    }
 
-        public DetailsModel(Vegan.Repositories.DuyLD.DBContext.VeganDBContext context)
+    public VeganPlaceDuyLd VeganPlaceDuyLd { get; set; } = new();
+
+    public async Task<IActionResult> OnGetAsync(long? id)
+    {
+        if (id == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        public VeganPlaceDuyLd VeganPlaceDuyLd { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(long? id)
+        var place = await _service.GetByIdAsync(id.Value);
+        if (place == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var veganplaceduyld = await _context.VeganPlaceDuyLds.FirstOrDefaultAsync(m => m.VeganPlaceDuyLdid == id);
-            if (veganplaceduyld == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                VeganPlaceDuyLd = veganplaceduyld;
-            }
-            return Page();
+            return NotFound();
         }
+
+        VeganPlaceDuyLd = place;
+        return Page();
     }
 }
+
